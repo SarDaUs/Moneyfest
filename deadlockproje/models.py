@@ -1,19 +1,18 @@
 import datetime
 
-
 class DeadlockEngine:
     def __init__(self, num_processes=3, num_resources=2):
         self.num_processes = num_processes
         self.num_resources = num_resources
-
+        
         # Varsayılan Matrisler
         self.allocation = [[1, 0], [0, 1], [1, 1]]
         self.max_need = [[2, 1], [1, 2], [1, 1]]
         self.available = [0, 0]
-
+        
         # Süreç Öncelikleri ve Maliyetleri (Priority: 1 en yüksek, Cost: Sonlandırma maliyeti)
         self.priorities = [1, 2, 3]  # P0, P1, P2
-        self.costs = [10, 20, 5]  # P0, P1, P2
+        self.costs = [10, 20, 5]     # P0, P1, P2
 
     def reset_to_default(self):
         self.num_processes = 3
@@ -107,7 +106,7 @@ class DeadlockEngine:
                         "work": list(work),
                         "finish": list(finish),
                         "safe_sequence": list(safe_sequence),
-                        "msg": f"P{i} süreci kontrol ediliyor... İhtiyaç: {need[i]}, Mevcut Kullanılabilir (Work): {work}",
+                        "msg": f"P{i} süreci kontrol ediliyor... İhtiyaç: {need[i]}, Mevcut Kullanılabilir (Work): {work}"
                     })
 
                     if all(need[i][j] <= work[j] for j in range(self.num_resources)):
@@ -124,7 +123,7 @@ class DeadlockEngine:
                             "work": list(work),
                             "finish": list(finish),
                             "safe_sequence": list(safe_sequence),
-                            "msg": f"P{i} tamamlandı! Kaynaklar serbest bırakıldı. Yeni Work: {work}",
+                            "msg": f"P{i} tamamlandı! Kaynaklar serbest bırakıldı. Yeni Work: {work}"
                         })
                         break
                     else:
@@ -134,7 +133,7 @@ class DeadlockEngine:
                             "work": list(work),
                             "finish": list(finish),
                             "safe_sequence": list(safe_sequence),
-                            "msg": f"P{i} kaynak yetersizliğinden atlandı!",
+                            "msg": f"P{i} kaynak yetersizliğinden atlandı!"
                         })
 
             if not found:
@@ -144,7 +143,7 @@ class DeadlockEngine:
                     "work": list(work),
                     "finish": list(finish),
                     "safe_sequence": list(safe_sequence),
-                    "msg": "İlerleme sağlanamadı! Sistem Kilitlenme (Deadlock) riskinde.",
+                    "msg": "İlerleme sağlanamadı! Sistem Kilitlenme (Deadlock) riskinde."
                 })
                 break
 
@@ -155,6 +154,7 @@ class DeadlockEngine:
             total_allocated = [sum(self.allocation[i]) for i in range(self.num_processes)]
             victim_idx = total_allocated.index(max(total_allocated))
         elif strategy == "Lowest Priority (En Düşük Öncelikliyi Öldür)":
+            # En yüksek öncelik değeri sayısal olarak en düşük önceliktir (Örn: Priority 5 < Priority 1)
             victim_idx = self.priorities.index(max(self.priorities))
         elif strategy == "Lowest Termination Cost (En Az Maliyetliyi Kurban Et)":
             victim_idx = self.costs.index(min(self.costs))
@@ -171,10 +171,10 @@ class DeadlockEngine:
 
     def generate_report(self, is_safe, safe_seq):
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        report = "=========================================\n"
-        report += " DEADLOCK SIMULATOR - SISTEM DURUM RAPORU\n"
+        report = f"=========================================\n"
+        report += f" DEADLOCK SIMULATOR - SISTEM DURUM RAPORU\n"
         report += f" Tarih: {now}\n"
-        report += "=========================================\n\n"
+        report += f"=========================================\n\n"
         report += f"Sistem Boyutu: {self.num_processes} Süreç (P), {self.num_resources} Kaynak (R)\n\n"
         report += "SÜREÇ ÖNCELİKLERİ VE MALİYETLERİ:\n"
         for i in range(self.num_processes):
@@ -188,9 +188,9 @@ class DeadlockEngine:
         report += f"\nAVAILABLE VECTOR: {self.available}\n"
         report += "-----------------------------------------\n"
         if is_safe:
-            report += "GÜVENLİK DURUMU: GÜVENLİ (SAFE)\n"
+            report += f"GÜVENLİK DURUMU: GÜVENLİ (SAFE)\n"
             report += f"Güvenli Dizi (Safe Sequence): {' -> '.join(safe_seq)}\n"
         else:
-            report += "GÜVENLİK DURUMU: GÜVENSİZ / DEADLOCK RISKI!\n"
+            report += f"GÜVENLİK DURUMU: GÜVENSİZ / DEADLOCK RISKI!\n"
         report += "=========================================\n"
         return report
