@@ -22,3 +22,7 @@ cd Moneyfest
 pip install networkx matplotlib
 
 pn main.py
+
+## Dosya indirme
+
+Dosyayı bilgisayarınıza zip olarak indirin.
