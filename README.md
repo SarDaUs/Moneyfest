@@ -19,12 +19,18 @@ Terminal kısmından python main.py komutunu çalıştırınca dosyamız açılm
 git clone [https://github.com/SarDaus/Moneyfest.git](https://github.com/SarDaUs/Moneyfest.git)
 cd Moneyfest ya da dosyayı zip olarak indirin.
 
-Ternminalde 
+Terminalde ;
+
 pip install networkx matplotlib
+
 çalıştırın.
 
-İndirmeler tamamlandıktan sonra programı çalıştırmak için terminalde 
+
+
+İndirmeler tamamlandıktan sonra programı çalıştırmak için terminalde ;
+
 py main.py
+
 kodunu çalıştırın.
 
 ## Dosya indirme
