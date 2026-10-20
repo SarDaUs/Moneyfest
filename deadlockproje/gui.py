@@ -3,7 +3,6 @@ from tkinter import ttk, messagebox, filedialog
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
 from models import DeadlockEngine
 
 class DeadlockSimulatorApp:
