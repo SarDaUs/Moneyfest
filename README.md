@@ -13,7 +13,7 @@ Adım Adım Algoritma Simülasyonu (Step Engine): Banker's Algoritması'nın ark
 
 Anlık Sistem Sağlık Göstergesi (Health Meter): Sistemdeki kilitlenme riskini anlık analiz ederek üst panelde HEALTHY (Yeşil), WARNING (Sarı) veya CRITICAL / DEADLOCK (Kırmızı) rozetleriyle bildirir.
 
-Akıllı Kilitlenme Çözümü (Multi-Strategy Recovery): Deadlock oluştuğunda sistemi en az zararla kurtarmak için 4 farklı strateji sunar:Victim: Max Allocation (En çok kaynak tutan süreci sonlandırma)Lowest Priority (En düşük öncelikli süreci kapatma)Lowest Termination Cost (Sisteme en az maliyet çıkaracak süreci kurban etme)Resource Preemption (Süreci öldürmeden elindeki kaynakları zorla geri alma)
+Akıllı Kilitlenme Çözümü (Multi-Strategy Recovery): Deadlock oluştuğunda sistemi en az zararla kurtarmak için 4 farklı strateji sunar. Max Allocation (En çok kaynak tutan süreci sonlandırma)Lowest Priority (En düşük öncelikli süreci kapatma)Lowest Termination Cost (Sisteme en az maliyet çıkaracak süreci kurban etme)Resource Preemption (Süreci öldürmeden elindeki kaynakları zorla geri alma).
 
 Dinamik Boyutlandırma ve Esnek Veri Girişi: Sabit bir senaryoya bağlı kalmadan kullanıcı tarafından istenilen sayıda Süreç ($P$) ve Kaynak ($R$) tanımlanmasına, matris verilerinin doğrudan arayüzden güncellenmesine olanak tanır.
 
