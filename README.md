@@ -13,4 +13,4 @@ cd Moneyfest
 
 pip install networkx matplotlib
 
-python main.py
+pn main.py
