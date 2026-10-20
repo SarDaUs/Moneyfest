@@ -10,7 +10,7 @@ class DeadlockEngine:
         self.max_need = [[2, 1], [1, 2], [1, 1]]
         self.available = [0, 0]
         
-        # Süreç Öncelikleri ve Maliyetleri (Priority: 1 en yüksek, Cost: Sonlandırma maliyeti)
+        # Süreç Öncelikleri ve Maliyetleri
         self.priorities = [1, 2, 3]  # P0, P1, P2
         self.costs = [10, 20, 5]     # P0, P1, P2
 
@@ -24,7 +24,7 @@ class DeadlockEngine:
         self.costs = [10, 20, 5]
 
     def load_preset(self, preset_name):
-        """Hazır Senaryo Kütüphanesi"""
+        """Hazır Senaryolar Kütüphanesi"""
         if preset_name == "Deadlock (Kilitlenme Senaryosu)":
             self.set_dimensions(3, 2)
             self.allocation = [[1, 0], [0, 1], [1, 1]]
@@ -83,8 +83,26 @@ class DeadlockEngine:
         is_safe = len(safe_sequence) == self.num_processes
         return is_safe, safe_sequence
 
+    def get_system_health_status(self):
+        """Sistemin anlık sağlık durumunu ve renk kodunu döndürür"""
+        is_safe, _ = self.run_bankers()
+        if is_safe:
+            return "HEALTHY", "#2ecc71"  # Yeşil
+        
+        has_waiting_requests = False
+        for i in range(self.num_processes):
+            for j in range(self.num_resources):
+                need = self.max_need[i][j] - self.allocation[i][j]
+                if need > 0 and self.available[j] < need:
+                    has_waiting_requests = True
+                    break
+        
+        if has_waiting_requests:
+            return "CRITICAL (DEADLOCK)", "#e74c3c"  # Kırmızı
+        return "WARNING", "#f1c40f"  # Sarı
+
     def get_step_by_step_execution(self):
-        """Adım Adım Çalıştırma için Durum Üreteci (Generator/List)"""
+        """Adım Adım Çalıştırma için Durum Listesi"""
         steps = []
         work = list(self.available)
         finish = [False] * self.num_processes
@@ -92,14 +110,12 @@ class DeadlockEngine:
             [self.max_need[i][j] - self.allocation[i][j] for j in range(self.num_resources)]
             for i in range(self.num_processes)
         ]
-
         safe_sequence = []
 
         for step_idx in range(self.num_processes):
             found = False
             for i in range(self.num_processes):
                 if not finish[i]:
-                    # Adım 1: Kontrol ediliyor
                     steps.append({
                         "checking_process": f"P{i}",
                         "status": "CHECKING",
@@ -116,7 +132,6 @@ class DeadlockEngine:
                         safe_sequence.append(f"P{i}")
                         found = True
 
-                        # Adım 2: Başarılı, kaynaklar salındı
                         steps.append({
                             "checking_process": f"P{i}",
                             "status": "SUCCESS",
@@ -154,7 +169,6 @@ class DeadlockEngine:
             total_allocated = [sum(self.allocation[i]) for i in range(self.num_processes)]
             victim_idx = total_allocated.index(max(total_allocated))
         elif strategy == "Lowest Priority (En Düşük Öncelikliyi Öldür)":
-            # En yüksek öncelik değeri sayısal olarak en düşük önceliktir (Örn: Priority 5 < Priority 1)
             victim_idx = self.priorities.index(max(self.priorities))
         elif strategy == "Lowest Termination Cost (En Az Maliyetliyi Kurban Et)":
             victim_idx = self.costs.index(min(self.costs))
@@ -194,21 +208,3 @@ class DeadlockEngine:
             report += f"GÜVENLİK DURUMU: GÜVENSİZ / DEADLOCK RISKI!\n"
         report += "=========================================\n"
         return report
-        def get_system_health_status(self):
-        """Sistemin anlık sağlık durumunu analiz eder"""
-        is_safe, _ = self.run_bankers()
-        if is_safe:
-            return "HEALTHY", "#2ecc71"  # Yeşil
-        
-        # Deadlock risk kontrolü
-        has_waiting_requests = False
-        for i in range(self.num_processes):
-            for j in range(self.num_resources):
-                need = self.max_need[i][j] - self.allocation[i][j]
-                if need > 0 and self.available[j] < need:
-                    has_waiting_requests = True
-                    break
-        
-        if has_waiting_requests:
-            return "CRITICAL (DEADLOCK)", "#e74c3c"  # Kırmızı
-        return "WARNING", "#f1c40f"  # Sarı
