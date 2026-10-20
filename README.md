@@ -1,7 +1,7 @@
 # Moneyfest
 #  Deadlock Simulator & Banker's Algorithm 
 
-İşletim Sistemleri dersi kapsamında geliştirilmiş; **Banker Algoritması (Banker's Algorithm)**, **Deadlock Tespiti ve Çözümü (Deadlock Detection & Resolution)** ve **Kaynak Tahsis Çizgesi (Resource Allocation Graph - RAG)** konularını interaktif ve görsel olarak simüle eden bir masaüstü uygulamasıdır. 
+İşletim Sistemleri dersi kapsamında geliştirilmiş; **Banker Algoritması (Banker's Algorithm)**, **Deadlock Tespiti ve Çözümü (Deadlock Detection & Resolution)** ve **Kaynak Tahsis Çizgesi (Resource Allocation Graph - RAG)** konularını teorik ders notlarından çıkarıp; canlı, görsel ve interaktif bir masaüstü simülasyonuna dönüştürmek amacıyla geliştirilmiştir.
 
 ##  İçerik
 
