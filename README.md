@@ -17,12 +17,16 @@ Projenin bilgisayarınızda çalışabilmesi için **Python 3.8** veya üzeri bi
 Terminal kısmından python main.py komutunu çalıştırınca dosyamız açılmaktadır.
 
 git clone [https://github.com/SarDaus/Moneyfest.git](https://github.com/SarDaUs/Moneyfest.git)
-cd Moneyfest
+cd Moneyfest ya da dosyayı zip olarak indirin.
 
+Ternminalde 
 pip install networkx matplotlib
+çalıştırın.
 
-pn main.py
+İndirmeler tamamlandıktan sonra programı çalıştırmak için terminalde 
+py main.py
+kodunu çalıştırın.
 
 ## Dosya indirme
 
-Dosyayı bilgisayarınıza zip olarak indirin.
+Yeşil code butonuna basıp dosyayı bilgisayarınıza zip olarak indirin.
