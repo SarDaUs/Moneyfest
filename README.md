@@ -3,7 +3,7 @@
 
 İşletim Sistemleri dersi kapsamında geliştirilmiş; **Banker Algoritması (Banker's Algorithm)**, **Deadlock Tespiti ve Çözümü (Deadlock Detection & Resolution)** ve **Kaynak Tahsis Çizgesi (Resource Allocation Graph - RAG)** konularını teorik ders notlarından çıkarıp; canlı, görsel ve interaktif bir masaüstü simülasyonuna dönüştürmek amacıyla geliştirilmiştir.
 
-## Projede Yapılan İşler
+## Proje İçeriği
 
 Canlı Kaynak Tahsis Grafiği (RAG Visualizer): Süreçler ($P$) ile kaynaklar ($R$) arasındaki bağımlılıkları, kilitlenmeleri ve istekleri NetworkX & Matplotlib kullanarak dinamik bir ağ grafiği üzerinde anlık çizer.
 
