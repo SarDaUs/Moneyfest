@@ -15,6 +15,8 @@ Anlık Sistem Sağlık Göstergesi (Health Meter): Sistemdeki kilitlenme riskini
 
 Akıllı Kilitlenme Çözümü (Multi-Strategy Recovery): Deadlock oluştuğunda sistemi en az zararla kurtarmak için 4 farklı strateji sunar. Max Allocation (En çok kaynak tutan süreci sonlandırma)Lowest Priority (En düşük öncelikli süreci kapatma)Lowest Termination Cost (Sisteme en az maliyet çıkaracak süreci kurban etme)Resource Preemption (Süreci öldürmeden elindeki kaynakları zorla geri alma).
 
+Tema Yönetimi(Dark/Light Mode): Bir yazılımın veya uygulamanın arayüz bileşenlerinin (arka planlar, butonlar, metinler, çerçeveler vb.) renk paletlerinin ve görsel stillerinin merkezi bir mantıkla kontrol edilmesi ve dinamik olarak değiştirilebilmesini sağlayan süreçtir. Projenizde bu durum apply_theme ve toggle_theme fonksiyonlarıyla, Tkinter bileşenlerinin ve Matplotlib grafik tuvalinin stillerinin anlık olarak güncellenmesiyle sağlanmıştır.
+
 Dinamik Boyutlandırma ve Esnek Veri Girişi: Sabit bir senaryoya bağlı kalmadan kullanıcı tarafından istenilen sayıda Süreç ($P$) ve Kaynak ($R$) tanımlanmasına, matris verilerinin doğrudan arayüzden güncellenmesine olanak tanır.
 
 Hazır Senaryo Kütüphanesi (Presets): Tek tıkla Deadlock, Safe State veya High Starvation senaryolarını yükleyerek hızlı demo/test yapma imkanı sağlar.
