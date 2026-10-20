@@ -194,3 +194,21 @@ class DeadlockEngine:
             report += f"GÜVENLİK DURUMU: GÜVENSİZ / DEADLOCK RISKI!\n"
         report += "=========================================\n"
         return report
+        def get_system_health_status(self):
+        """Sistemin anlık sağlık durumunu analiz eder"""
+        is_safe, _ = self.run_bankers()
+        if is_safe:
+            return "HEALTHY", "#2ecc71"  # Yeşil
+        
+        # Deadlock risk kontrolü
+        has_waiting_requests = False
+        for i in range(self.num_processes):
+            for j in range(self.num_resources):
+                need = self.max_need[i][j] - self.allocation[i][j]
+                if need > 0 and self.available[j] < need:
+                    has_waiting_requests = True
+                    break
+        
+        if has_waiting_requests:
+            return "CRITICAL (DEADLOCK)", "#e74c3c"  # Kırmızı
+        return "WARNING", "#f1c40f"  # Sarı
