@@ -26,21 +26,26 @@ class DeadlockSimulatorApp:
         self.setup_ui()
 
     def setup_ui(self):
-        # Stil Yönetimi
         self.style = ttk.Style()
         self.apply_theme()
 
         self.left_frame = ttk.Frame(self.root, padding="10")
         self.left_frame.pack(side=tk.LEFT, fill=tk.Y)
 
-        # Üst Başlık ve Dark Mode Butonu
+        # Üst Başlık, Sağlık Rozeti ve Dark Mode Butonu
         top_bar = ttk.Frame(self.left_frame)
         top_bar.pack(fill=tk.X, pady=5)
-        ttk.Label(top_bar, text="Deadlock Control Center", font=("Helvetica", 13, "bold")).pack(side=tk.LEFT)
+        
+        ttk.Label(top_bar, text="Deadlock Control Center", font=("Helvetica", 11, "bold")).pack(side=tk.LEFT)
+        
+        # Anlık Sistem Sağlık Durum Rozeti
+        self.health_label = tk.Label(top_bar, text="HEALTHY", bg="#2ecc71", fg="white", font=("Helvetica", 8, "bold"), padx=6, pady=2)
+        self.health_label.pack(side=tk.LEFT, padx=6)
+
         self.theme_btn = ttk.Button(top_bar, text="🌙 Dark Mode", command=self.toggle_theme)
         self.theme_btn.pack(side=tk.RIGHT)
 
-        # --- PRESET SCENARIOS ---
+        # HAZIR SENARYOLAR
         preset_group = ttk.LabelFrame(self.left_frame, text=" Hazır Senaryolar (Presets) ", padding="5")
         preset_group.pack(fill=tk.X, pady=4)
         
@@ -53,7 +58,7 @@ class DeadlockSimulatorApp:
         self.preset_cb.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
         ttk.Button(preset_group, text="Yükle", command=self.load_preset).pack(side=tk.RIGHT, padx=2)
 
-        # --- BOYUT AYARLARI ---
+        # BOYUT AYARLARI
         dim_group = ttk.LabelFrame(self.left_frame, text=" Boyut Ayarları ", padding="5")
         dim_group.pack(fill=tk.X, pady=4)
         dim_row = ttk.Frame(dim_group)
@@ -68,14 +73,12 @@ class DeadlockSimulatorApp:
         self.r_spin.pack(side=tk.LEFT, padx=2)
         ttk.Button(dim_row, text="Uygula", command=self.apply_dimensions).pack(side=tk.LEFT, padx=5)
 
-        # --- MATRİS GİRİŞİ ---
+        # MATRİS GİRİŞİ
         self.input_group = ttk.LabelFrame(self.left_frame, text=" Matris Veri Girişi ", padding="5")
         self.input_group.pack(fill=tk.X, pady=5)
         self.create_matrix_inputs()
 
-        ttk.Button(self.input_group, text="Matris Değerlerini Güncelle", command=self.update_values_from_ui).pack(fill=tk.X, pady=4)
-
-        # --- ADIM ADIM ÇALIŞTIRMA (STEP ENGINE) ---
+        # ADIM ADIM ÇALIŞTIRMA
         step_group = ttk.LabelFrame(self.left_frame, text=" Adım Adım Algoritma Yürütme ", padding="5")
         step_group.pack(fill=tk.X, pady=5)
 
@@ -98,8 +101,9 @@ class DeadlockSimulatorApp:
         self.strategy_cb.pack(fill=tk.X, pady=4)
         ttk.Button(strategy_group, text="Seçilen Stratejiyle Çöz", command=self.resolve_deadlock).pack(fill=tk.X, pady=2)
 
-        # RAPOR VE GENEL BUTONLAR
-        ttk.Button(self.left_frame, text="📄 Raporu Dosyaya Aktır (.txt)", command=self.export_report).pack(fill=tk.X, pady=4)
+        # RAPOR VE LOG BUTONLARI
+        ttk.Button(self.left_frame, text="📄 Raporu Dosyaya Aktır (.txt)", command=self.export_report).pack(fill=tk.X, pady=2)
+        ttk.Button(self.left_frame, text="💾 İşlem Loglarını Kaydet (.log)", command=self.export_logs).pack(fill=tk.X, pady=2)
 
         # LOG EKRANI
         ttk.Label(self.left_frame, text="Sistem Durum Logu:", font=("Helvetica", 10, "bold")).pack(anchor=tk.W, pady=(5, 2))
@@ -114,7 +118,7 @@ class DeadlockSimulatorApp:
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.right_frame)
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
-        self.log("Sistem hazır. Dark Mode, Presets & Step Engine eklendi.")
+        self.log("Sistem hazır. Dark Mode, Presets, Step Engine & Health Meter eklendi.")
         self.draw_graph()
 
     def apply_theme(self):
@@ -144,7 +148,7 @@ class DeadlockSimulatorApp:
             widget.destroy()
 
         res_labels = ", ".join([f"R{j}" for j in range(self.engine.num_resources)])
-        ttk.Label(self.input_group, text=f"Allocation [{res_labels}] | Max Need | Prio | Cost", font=("Helvetica", 8, "bold")).pack(anchor=tk.W)
+        ttk.Label(self.input_group, text=f"Alloc [{res_labels}] | Max Need | Prio | Cost", font=("Helvetica", 8, "bold")).pack(anchor=tk.W, pady=(0, 2))
         
         self.alloc_entries = []
         self.max_entries = []
@@ -165,7 +169,7 @@ class DeadlockSimulatorApp:
                 alloc_row.append(e)
             self.alloc_entries.append(alloc_row)
 
-            ttk.Label(row_frame, text="|").pack(side=tk.LEFT, padx=2)
+            ttk.Label(row_frame, text="|").pack(side=tk.LEFT, padx=1)
 
             # Max Need
             max_row = []
@@ -176,7 +180,7 @@ class DeadlockSimulatorApp:
                 max_row.append(e)
             self.max_entries.append(max_row)
 
-            ttk.Label(row_frame, text="|").pack(side=tk.LEFT, padx=2)
+            ttk.Label(row_frame, text="|").pack(side=tk.LEFT, padx=1)
 
             # Priority & Cost
             pe = ttk.Entry(row_frame, width=3)
@@ -184,10 +188,17 @@ class DeadlockSimulatorApp:
             pe.pack(side=tk.LEFT, padx=1)
             self.prio_entries.append(pe)
 
-            ce = ttk.Entry(row_frame, width=4)
+            ce = ttk.Entry(row_frame, width=3)
             ce.insert(0, str(self.engine.costs[i]))
             ce.pack(side=tk.LEFT, padx=1)
             self.cost_entries.append(ce)
+
+        ttk.Button(self.input_group, text="🔄 Matris Değerlerini Güncelle", command=self.update_values_from_ui).pack(fill=tk.X, pady=(6, 2))
+
+    def update_health_badge(self):
+        """Sağlık göstergesi rozetini günceller"""
+        status_text, bg_color = self.engine.get_system_health_status()
+        self.health_label.config(text=status_text, bg=bg_color)
 
     def load_preset(self):
         preset_name = self.preset_cb.get()
@@ -268,16 +279,15 @@ class DeadlockSimulatorApp:
         for j, r in enumerate(resources):
             pos[r] = (j * (max(len(processes)-1, 1) / max(len(resources)-1, 1)), 0)
 
-        # Düğüm Renkleri (Step Animation için)
         node_colors = []
         for p in processes:
             if highlight_process and p == highlight_process:
                 if status == "CHECKING":
-                    node_colors.append("#f1c40f")  # Sarı
+                    node_colors.append("#f1c40f")
                 elif status == "SUCCESS":
-                    node_colors.append("#2ecc71")  # Yeşil
+                    node_colors.append("#2ecc71")
                 elif status == "FAILED":
-                    node_colors.append("#e74c3c")  # Kırmızı
+                    node_colors.append("#e74c3c")
                 else:
                     node_colors.append("#8e44ad")
             else:
@@ -291,6 +301,8 @@ class DeadlockSimulatorApp:
         self.ax.set_title("Resource Allocation Graph (RAG)", fontsize=12, color=text_color)
         self.ax.axis('off')
         self.canvas.draw()
+        
+        self.update_health_badge()
 
     def start_step_execution(self):
         self.execution_steps = self.engine.get_step_by_step_execution()
@@ -332,3 +344,16 @@ class DeadlockSimulatorApp:
                 f.write(report_text)
             self.log(f"Rapor kaydedildi: {file_path}")
             messagebox.showinfo("Başarılı", "Rapor metin dosyası olarak kaydedildi!")
+
+    def export_logs(self):
+        """Log ekranındaki metinleri .log dosyası olarak kaydeder"""
+        log_content = self.log_text.get("1.0", tk.END)
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".log",
+            filetypes=[("Log Files", "*.log"), ("Text Files", "*.txt"), ("All Files", "*.*")],
+            title="Sistem İşlem Loglarını Kaydet"
+        )
+        if file_path:
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(log_content)
+            messagebox.showinfo("Başarılı", "İşlem logları başarıyla kaydedildi!")
