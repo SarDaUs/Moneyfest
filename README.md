@@ -1,7 +1,15 @@
 # Moneyfest
 #  Deadlock Simulator & Banker's Algorithm 
 
-İşletim Sistemleri dersi kapsamında geliştirilmiş; **Banker Algoritması (Banker's Algorithm)**, **Deadlock Tespiti ve Çözümü (Deadlock Detection & Resolution)** ve **Kaynak Tahsis Çizgesi (Resource Allocation Graph - RAG)** konularını interaktif ve görsel olarak simüle eden bir masaüstü uygulamasıdır.
+İşletim Sistemleri dersi kapsamında geliştirilmiş; **Banker Algoritması (Banker's Algorithm)**, **Deadlock Tespiti ve Çözümü (Deadlock Detection & Resolution)** ve **Kaynak Tahsis Çizgesi (Resource Allocation Graph - RAG)** konularını interaktif ve görsel olarak simüle eden bir masaüstü uygulamasıdır. 
+
+##  İçerik
+
+Görselleştirme: Süreç (P) ve Kaynak (R) bağımlılıklarını Resource Allocation Graph (RAG) üzerinden dinamik ve renkli bir ağ grafiği olarak çizdirip kilitlenmenin nerede oluştuğunu anında tespit etmek. 
+
+Güvenlik Analizi: Sisteme gelen kaynak isteklerinin güvenli bir çalışma sırasında (Safe Sequence) kalıp kalmadığını Banker's Algoritması ile adım adım simüle etmek.
+
+Akıllı Kurtarma Stratejileri: Kilitlenme durumunda gerçek işletim sistemlerinin kullandığı kurban seçimi (Victim Selection: En çok kaynak tüketen, en düşük öncelikli veya en az maliyetli süreci kapatma) ve kaynak geri alma (Resource Preemption) karar mekanizmalarını deneysel olarak test etmek.
 
 ##  Kurulum ve Çalıştırma
 
