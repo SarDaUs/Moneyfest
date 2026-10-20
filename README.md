@@ -6,7 +6,7 @@
 ##  Kurulum ve Çalıştırma
 
 Projenin bilgisayarınızda çalışabilmesi için **Python 3.8** veya üzeri bir sürümün yüklü olması gerekmektedir.
-
+Terminal kısmından python main.py komutunu çalıştırınca dosyamız açılmaktadır.
 
 git clone [https://github.com/SarDaus/Moneyfest.git](https://github.com/SarDaUs/Moneyfest.git)
 cd Moneyfest
